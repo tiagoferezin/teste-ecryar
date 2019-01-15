@@ -10,14 +10,19 @@ use Illuminate\Support\Facades\Auth;
 class GraphController extends Controller
 {
     private $api;
-    public function __construct(Facebook $fb)
-    {
-        $this->middleware(function ($request, $next) use ($fb) {
-            $fb->setDefaultAccessToken(Auth::user()->token);
-            $this->api = $fb;
-            return $next($request);
-        });
-    }
+    #public function __construct(Facebook $fb)
+    #{
+     #   $fb = new Facebook([
+      #      'app_id' => '356321788489607',
+       #     'app_secret' => '70d8add9f5005fd814ece322955dd159',
+        #    'default_graph_version' => 'v3.2'
+         #   ]);
+       # $this->middleware(function ($request, $next) use ($fb) {
+        #    $fb->setDefaultAccessToken(Auth::user()->token);
+        #   $this->api = $fb;
+        #    return $next($request);
+        #});
+    #}
 
     public function retornaUserProfile(){
     	try {
@@ -61,13 +66,36 @@ class GraphController extends Controller
     }
 	}
 
-	//public function retornaPostFB($post_id){
-	//	try{
-			//$response = $this->api->get('')
-	//	}
-	//}
+	public function getPagePosts(){
 
-	//public function listaPostsFB(){
-		
-	//}
+        $result = "";
+        try {
+
+            $fb = new Facebook([
+            'app_id' => '356321788489607',
+            'app_secret' => '70d8add9f5005fd814ece322955dd159',
+            'default_graph_version' => 'v3.2'
+            ]);
+
+            $access_token = 'EAAFEEqGg74cBAG4ilZCbNfsOwBU5gKrPU3naCigjhsmcb9DVnoMAHEbk1CZAy4PC2pseGPb18ZCZBKACHnptpivZBk9oo2whDD3ZAHizB2Wh1ovG1ez2HJZAumTHrJ7hGPNaeJjq6HCebAttfJEj08x0do8ludRJHwFeZB4jZBhQsOEZBaVOKPiTPRUw1svjhDNMt0Rzft3cFJygZDZD';
+                // Returns a `FacebookFacebookResponse` object
+            $response = $fb->get(
+                '/1820791091575061/feed',
+                'EAAFEEqGg74cBAG4ilZCbNfsOwBU5gKrPU3naCigjhsmcb9DVnoMAHEbk1CZAy4PC2pseGPb18ZCZBKACHnptpivZBk9oo2whDD3ZAHizB2Wh1ovG1ez2HJZAumTHrJ7hGPNaeJjq6HCebAttfJEj08x0do8ludRJHwFeZB4jZBhQsOEZBaVOKPiTPRUw1svjhDNMt0Rzft3cFJygZDZD'
+                );
+
+            $json = json_decode($request->getBody(),true);
+
+            $result = $json;
+
+        } catch(FacebookExceptionsFacebookResponseException $e) {
+            echo 'Graph returned an error: ' . $e->getMessage();
+            exit;
+        } catch(FacebookExceptionsFacebookSDKException $e) {
+            echo 'Facebook SDK returned an error: ' . $e->getMessage();
+            exit;
+        }
+        //$graphNode = $response->getGraphNode();
+        return $result;
+    }
 }

@@ -28,4 +28,5 @@ Route::group(['middleware' => [
 ]], function(){
     Route::get('/user', 'GraphController@retornaUserProfile');
     Route::post('/page', 'GraphController@publishToPage');
+    Route::get('/posts', 'GraphController@getPagePosts');
 });

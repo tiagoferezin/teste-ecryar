@@ -18,29 +18,20 @@ class PostsController extends Controller
 
 
 
-        $access_token = $fc->getPageAccessToken('page_id');
-        $request = $client->request('GET', $url_padrao.''.$page_id.'/feed?access_token='.$access_token);
+        $access_token = 'EAAFEEqGg74cBAGlKiHCRWLYgZB4L20rqlXJF95L6MunB0mtc3ZBCAHnQU2nRW8zsKpDfcd9BhMxUpivnbqGdEPJZA5Re9LKA2tzYS7sdYcwToCpO74ZBsDrE6lO2zMI9ZBXuUuVce0SvQdPx0XSZBSxFA9nZCcnm8AZD';
+        $request = $client->request('GET', 'https://graph.facebook.com/v3.2/1820791091575061/feed?access_token='.$access_token);
 
         $json = json_decode($request->getBody(),true);
 
         
 
-        $dados = $json["data"];
-        $ids = "";
-
-        for ($i=0; $i < count($dados); $i++) { 
-          if($i=0){
-            $ids = $dados[$i]["id"];
-          }else {
-            $ids = $ids. ", " .$dados[$i]["id"];
-          }
-        }
+        
         
         
         //$id = $dados['id'];
         //var_dump($array_ids);
         
-        return $ids;
+        return $json;
       } catch (Exception $e) {
         
       }

@@ -56,7 +56,7 @@ class LoginController extends Controller
         $fb = new Facebook([
             'app_id' => '356321788489607',
             'app_secret' => '70d8add9f5005fd814ece322955dd159',
-            'default_graph_version' => 'v2.10',
+            'default_graph_version' => 'v3.2'
             ]);
 
         $helper = $fb->getRedirectLoginHelper();
@@ -87,6 +87,6 @@ class LoginController extends Controller
         );
  
         Auth::login($user, true);
-        return redirect()->to('/'); // Redirect to a secure page
+        return redirect()->to('/user'); // Redirect to a secure page
     }
 }
